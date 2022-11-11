@@ -4,9 +4,10 @@ import CardsGenerationClass
 
 class CallingClass:
     def run(self):
-        self.numberOfCards = UserInputClass.UserInputClass().takingInputsFormUser()
+        self.inputToValueDict = {'cards': 0, 'simulations': 0}
+        self.inputToValueDict = UserInputClass.UserInputClass().takingInputsFormUser(self.inputToValueDict)
         self.cardsArray = CardsGenerationClass.CardsGenerationClass(
-        ).generateCards(self.numberOfCards)
+        ).generateCards(self.inputToValueDict['cards'])
 
 
 if __name__ == "__main__":
