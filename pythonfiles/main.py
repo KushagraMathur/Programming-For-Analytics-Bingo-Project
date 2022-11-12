@@ -11,7 +11,7 @@ class CallingClass:
         self.cardsArray = CardsGenerationClass.CardsGenerationClass(
         ).generateCards(self.inputToValueDict['cards'])
         self.simulationSet = Simulation.Simulations().CountSimulations(
-            self.inputToValueDict['cards'], self.cardsArray)
+            self.inputToValueDict['cards'], self.cardsArray, self.inputToValueDict['simulations'])
 
 
 if __name__ == "__main__":
