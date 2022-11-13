@@ -1,44 +1,66 @@
 import numpy as np
 from collections import defaultdict
+import UserInputClass
 
 
 class Simulations:
-    def CountSimulations(self, numberOfCards, cardsArray):
-        simulationSet = defaultdict(list)
-        numOfSim = 10
-        while numOfSim != 0:
+    '''
+    @description
+    Method to check how many players reached bingo for 'n' number of simulations
+    @parameter
+    numberOfCards - The number of cards created by user.
+    cardsArray- An array equal to size of cards array.
+    numOfSim- The number of simulations entered by user.
+    '''
+    def checkBingo(self, countCardsSet, bingoCardsSet, testArray):
+        for index in countCardsSet:
+            if np.diagonal(self.testArray[index]).sum() == 5:
+                bingoCardsSet.add(index)
+            elif (np.diag(np.fliplr(self.testArray[index])).sum()) == 5:
+                bingoCardsSet.add(index)
+
+            if index in bingoCardsSet:
+                continue
+            for row in range(0, 5):
+                if self.testArray[index, row].sum() == 5:
+                    bingoCardsSet.add(index)
+                elif self.testArray[index, :, row].sum() == 5:
+                    bingoCardsSet.add(index)
+
+     '''
+    @description
+    Method to check how many players reached bingo for 'n' number of simulations
+    @parameter
+    numberOfCards - The number of cards created by user.
+    cardsArray- An array equal to size of cards array.
+    numOfSim- The number of simulations entered by user.
+    '''
+    def CountSimulations(self, numberOfCards, cardsArray, numOfSim):
+        numOfWinnersDict = defaultdict(list)
+        loopVariable = 1
+        while loopVariable <= numOfSim:
             self.bingoNumbers = np.arange(1, 76)
             np.random.shuffle(self.bingoNumbers)
 
             self.testArray = np.zeros((numberOfCards, 5, 5))
             self.testArray[:, 2, 2] = 1
 
-            bingoCardsSet = set()
+            self.bingoCardSet = set()
             countCardsSet = set()
             numbersCalled = 1
             for number in self.bingoNumbers:
                 countCardsSet = set()
                 self.testArray[cardsArray == number] = 1
-                for index in range(0, numberOfCards):
-                    if number in cardsArray[index]:
-                        countCardsSet.add(index)
+                countCardsSet.update(list((np.where(cardsArray == number))[0]))
 
-                for index in countCardsSet:
-                    for row in range(0, 5):
-                        if self.testArray[index, row].sum() == 5:
-                            bingoCardsSet.add(index)
-                        elif self.testArray[index, :, row].sum() == 5:
-                            bingoCardsSet.add(index)
+                self.checkBingo(
+                    countCardsSet, self.bingoCardSet, self.testArray)
 
-                    if np.diagonal(self.testArray[index]).sum() == 5:
-                        bingoCardsSet.add(index)
-                    elif (self.testArray[index, 0, 4] + self.testArray[index, 1, 3] + self.testArray[index, 2, 2] + self.testArray[index, 3, 1] + self.testArray[index, 4, 0]) == 5:
-                        bingoCardsSet.add(index)
-
-                simulationSet[numbersCalled].append(len(bingoCardsSet))
+                numOfWinnersDict[numbersCalled].append(len(self.bingoCardSet))
                 numbersCalled += 1
-            numOfSim -= 1
+            loopVariable += 1
 
-        for key, value in simulationSet.items():
+        for key, value in numOfWinnersDict.items():
             print(key, ' : ', value)
-        return simulationSet
+
+        return numOfWinnersDict

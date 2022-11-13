@@ -10,7 +10,7 @@ class CallingClass:
         ).takingInputsFormUser(self.inputToValueDict)
         self.cardsArray = CardsGenerationClass.CardsGenerationClass(
         ).generateCards(self.inputToValueDict['cards'])
-        self.simulationSet = Simulation.Simulations().CountSimulations(
+        self.numOfWinnersDict = Simulation.Simulations().CountSimulations(
             self.inputToValueDict['cards'], self.cardsArray)
 
 
