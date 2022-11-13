@@ -4,6 +4,14 @@ import UserInputClass
 
 
 class Simulations:
+    '''
+    @description
+    Method to check how many players reached bingo for 'n' number of simulations
+    @parameter
+    numberOfCards - The number of cards created by user.
+    cardsArray- An array equal to size of cards array.
+    numOfSim- The number of simulations entered by user.
+    '''
     def checkBingo(self, countCardsSet, bingoCardsSet, testArray):
         for index in countCardsSet:
             if np.diagonal(self.testArray[index]).sum() == 5:
@@ -19,8 +27,16 @@ class Simulations:
                 elif self.testArray[index, :, row].sum() == 5:
                     bingoCardsSet.add(index)
 
+     '''
+    @description
+    Method to check how many players reached bingo for 'n' number of simulations
+    @parameter
+    numberOfCards - The number of cards created by user.
+    cardsArray- An array equal to size of cards array.
+    numOfSim- The number of simulations entered by user.
+    '''
     def CountSimulations(self, numberOfCards, cardsArray, numOfSim):
-        simulationSet = defaultdict(list)
+        numOfWinnersDict = defaultdict(list)
         loopVariable = 1
         while loopVariable <= numOfSim:
             self.bingoNumbers = np.arange(1, 76)
@@ -35,39 +51,16 @@ class Simulations:
             for number in self.bingoNumbers:
                 countCardsSet = set()
                 self.testArray[cardsArray == number] = 1
-                for index in range(0, numberOfCards):
-                    if number in cardsArray[index]:
-                        countCardsSet.add(index)
+                countCardsSet.update(list((np.where(cardsArray == number))[0]))
 
                 self.checkBingo(
                     countCardsSet, self.bingoCardSet, self.testArray)
 
-                simulationSet[numbersCalled].append(len(self.bingoCardSet))
+                numOfWinnersDict[numbersCalled].append(len(self.bingoCardSet))
                 numbersCalled += 1
             loopVariable += 1
 
-        for key, value in simulationSet.items():
+        for key, value in numOfWinnersDict.items():
             print(key, ' : ', value)
 
-        avgWinnersSet = {}
-        maxWinnersSet = {}
-        minWinnersSet = {}
-        for i in range(0, 75):
-            avgWinnersSet[i+1] = int(
-                sum(list(simulationSet.values())[i])/numOfSim)
-            maxWinnersSet[i+1] = max(list(simulationSet.values())[i])
-            minWinnersSet[i+1] = min(list(simulationSet.values())[i])
-
-        print('Avg winners')
-        for key, value in avgWinnersSet.items():
-            print(key, ' : ', value)
-
-        print('Max winners')
-        for key, value in maxWinnersSet.items():
-            print(key, ' : ', value)
-
-        print('Min winners')
-        for key, value in minWinnersSet.items():
-            print(key, ' : ', value)
-
-        return simulationSet
+        return numOfWinnersDict
