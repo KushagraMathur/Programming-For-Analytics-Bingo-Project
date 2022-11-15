@@ -2,11 +2,11 @@ class Error(Exception):
     '''Base class for other exceptions '''
     pass
 
-class IncorrectValue(Error):
+class IncorrectValueException(Error):
     '''Raised when the input value for number of free cells is not an integer value'''
     pass
 
-class ValueTooLarge(Error):
+class ValueTooLargeException(Error):
     '''Raised when the input value for number of free cells is greater than total number of cells in a bingo card'''
     pass
 
@@ -26,19 +26,19 @@ class UserInputClass:
                     print('Enter the number of', inputVariable, ':')
                     userInput = int(input())
                     if userInput < 1 and inputVariable != "numOfFreeCells":
-                        raise IncorrectValue
+                        raise IncorrectValueException
                     if inputVariable == "numOfFreeCells":
                         if userInput > inputToValueDict['sizeOfCard']*inputToValueDict['sizeOfCard']:
-                            raise ValueTooLarge
+                            raise ValueTooLargeException
                         elif userInput < 0:
-                            raise IncorrectValue
+                            raise IncorrectValueException
                     check = 1
                     inputToValueDict[inputVariable] = userInput
-                except (IncorrectValue, ValueError):
+                except (IncorrectValueException, ValueError):
                     print('Incorrect number of', inputVariable,
                           'entered. Value can be only positive integer values greater than 0.')
                     check = 0
-                except ValueTooLarge:
+                except ValueTooLargeException:
                     print(
                         'Incorrect number of free cells entered. Number of free cells cannot be grater than size of card.')
                     check = 0
