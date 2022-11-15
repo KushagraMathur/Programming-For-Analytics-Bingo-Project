@@ -44,7 +44,7 @@ class UserInputClass:
                     check = 0
         return inputToValueDict
     
-    def takingIndicesForFreeCells(self, numOfFreeCells, indicesOfFreeCellDict):
+    def takingIndicesForFreeCells(self, numOfFreeCells, indicesOfFreeCellDict, sizeOfCard):
         for key in range(0, numOfFreeCells):
             for indice in ['row', 'column']:
                 check = 0
@@ -53,12 +53,12 @@ class UserInputClass:
                         print('Enter the indice for ', indice,
                               ' for free cell no. ', key+1, ':')
                         userInput = int(input())
-                        if userInput < 0:
+                        if userInput <= 0 or userInput > sizeOfCard:
                             raise Exception()
                         check = 1
                         indicesOfFreeCellDict[key].append(userInput)
                     except:
                         print('Incorrect indice of', indice,
-                              'entered. Value can be only positive integer values greater than or equal to 0.')
+                              'entered. Value can be only positive integer value greater than 0 and less than or equal to size of card.')
 
         return indicesOfFreeCellDict
