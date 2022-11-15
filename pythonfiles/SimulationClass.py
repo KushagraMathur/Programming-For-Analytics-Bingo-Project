@@ -59,6 +59,4 @@ class SimulationsClass:
                 numOfWinnersDict[numbersCalled].append(len(self.bingoCardSet))
                 numbersCalled += 1
             loopVariable += 1
-        for key, value in numOfWinnersDict.items():
-            print(key, ' : ', value)
         return numOfWinnersDict
