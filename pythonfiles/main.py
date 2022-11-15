@@ -17,7 +17,7 @@ class CallingClass:
         ).generateCards(self.inputToValueDict['cards'], self.inputToValueDict['sizeOfCard'], self.indicesOfFreeCellDict)        
         PdfGenerationClass.PdfGenerationClass().CreatePdf(self.cardsArray)
         self.numOfWinnersDict = SimulationClass.SimulationsClass().CountSimulations(
-            self.inputToValueDict['cards'], self.cardsArray, self.inputToValueDict['simulations'], self.inputToValueDict['sizeOfCard'])
+            self.inputToValueDict['cards'], self.cardsArray, self.inputToValueDict['simulations'], self.inputToValueDict['sizeOfCard'], self.indicesOfFreeCellDict)
         GraphPlottingClass.GraphPlottingClass().plotLineGraph(self.numOfWinnersDict)
 
 
