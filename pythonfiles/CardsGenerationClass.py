@@ -15,14 +15,14 @@ class CardsGenerationClass:
     cardValuesDict - Values are stored in a column to list of array dictionary
     '''
 
-    def generateCardElements(self, numberOfCards, cardRanges):
+    def generateCardElements(self, numberOfCards, cardRanges, sizeOfCard):
         start = 1
         cardValuesDict = dict()
         columnValuesSet = set()
         for key, value in cardRanges.items():
             columnValuesSet = set()
             while len(columnValuesSet) != numberOfCards:
-                randomList = random.sample(range(start, value+1), 5)
+                randomList = random.sample(range(start, value+1), sizeOfCard)
                 columnValuesSet.add(tuple(randomList))
             cardValuesDict[key] = [np.asarray(
                 arrayValue) for arrayValue in columnValuesSet]
@@ -38,12 +38,14 @@ class CardsGenerationClass:
     cardsArray - The array of cards generated.
     '''
 
-    def generateCards(self, numberOfCards):
-        cardRanges = {0: 15, 1: 30, 2: 45, 3: 60, 4: 75}
-        cardsArray = np.empty([numberOfCards, 5, 5])
-        cardValuesDict = self.generateCardElements(numberOfCards, cardRanges)
+    def generateCards(self, numberOfCards, sizeOfCard, indicesOfFreeCellDict):
+        cardRanges = {}
+        for number in range(sizeOfCard):
+            cardRanges[number] = (number+1)*sizeOfCard*3
+        cardValuesDict = self.generateCardElements(numberOfCards, cardRanges, sizeOfCard)
         for index in range(0, numberOfCards):
-            for column in range(5):
+            for column in range(sizeOfCard):
                 cardsArray[index][:, column] = cardValuesDict[column][index]
-        cardsArray[:, 2, 2] = -1
+        for value in indicesOfFreeCellDict.values():
+            cardsArray[:, value[0]-1, value[1]-1] = -1
         return cardsArray
