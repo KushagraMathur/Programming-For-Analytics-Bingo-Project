@@ -43,6 +43,7 @@ class CardsGenerationClass:
         for number in range(sizeOfCard):
             cardRanges[number] = (number+1)*sizeOfCard*3
         cardValuesDict = self.generateCardElements(numberOfCards, cardRanges, sizeOfCard)
+        cardsArray = np.empty([numberOfCards, sizeOfCard, sizeOfCard])
         for index in range(0, numberOfCards):
             for column in range(sizeOfCard):
                 cardsArray[index][:, column] = cardValuesDict[column][index]
