@@ -21,13 +21,10 @@ class SimulationsClass:
                 bingoCardsSet.add(index)
             elif (np.diag(np.fliplr(self.testArray[index])).sum()) == sizeOfCard:
                 bingoCardsSet.add(index)
-            if index in bingoCardsSet:
-                continue
-            for row in range(0, sizeOfCard):
-                if self.testArray[index, row].sum() == sizeOfCard:
-                    bingoCardsSet.add(index)
-                elif self.testArray[index, :, row].sum() == sizeOfCard:
-                    bingoCardsSet.add(index)
+            elif sizeOfCard in np.sum(testArray[index], axis=0):
+                bingoCardsSet.add(index)
+            elif sizeOfCard in np.sum(testArray[index], axis=1):
+                bingoCardsSet.add(index)
 
     '''
     @description
