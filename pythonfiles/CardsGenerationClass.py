@@ -46,5 +46,6 @@ class CardsGenerationClass:
         for index in range(0, numberOfCards):
             for column in range(sizeOfCard):
                 cardsArray[index][:, column] = cardValuesDict[column][index]
-        cardsArray[:, value[0]-1, value[1]-1] = -1
+        for value in indicesOfFreeCellDict.values():
+            cardsArray[:, value[0]-1, value[1]-1] = -1
         return cardsArray
