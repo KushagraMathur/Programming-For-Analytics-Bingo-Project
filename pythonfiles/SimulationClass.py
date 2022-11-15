@@ -39,14 +39,15 @@ class SimulationsClass:
     sizeOfCard- The size of card specified by user.
     '''
 
-    def CountSimulations(self, numberOfCards, cardsArray, numOfSim, sizeOfCard):
+    def CountSimulations(self, numberOfCards, cardsArray, numOfSim, sizeOfCard, indicesOfFreeCellDict):
         numOfWinnersDict = defaultdict(list)
         loopVariable = 1
         while loopVariable <= numOfSim:
             self.bingoNumbers = np.arange(1, sizeOfCard*sizeOfCard*3+1)
             np.random.shuffle(self.bingoNumbers)
             self.testArray = np.zeros((numberOfCards, sizeOfCard, sizeOfCard))
-            self.testArray[:, 2, 2] = 1
+            for value in indicesOfFreeCellDict.values():
+                self.testArray[:, value[0]-1, value[1]-1] = 1
             self.bingoCardSet = set()
             countCardsSet = set()
             numbersCalled = 1
@@ -54,8 +55,9 @@ class SimulationsClass:
                 countCardsSet = set()
                 self.testArray[cardsArray == number] = 1
                 countCardsSet.update(list((np.where(cardsArray == number))[0]))
-                self.checkBingo(
-                    countCardsSet, self.bingoCardSet, self.testArray, sizeOfCard)
+                if (len(countCardsSet) > 0):
+                    self.checkBingo(
+                        countCardsSet, self.bingoCardSet, self.testArray, sizeOfCard)
                 numOfWinnersDict[numbersCalled].append(len(self.bingoCardSet))
                 numbersCalled += 1
             loopVariable += 1
