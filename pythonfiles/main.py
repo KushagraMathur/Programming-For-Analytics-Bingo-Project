@@ -12,7 +12,7 @@ class CallingClass:
         ).takingInputsFromUser(self.inputToValueDict)
         self.indicesOfFreeCellDict = defaultdict(list)        
         self.indicesOfFreeCellDict = UserInputClass.UserInputClass(
-        ).takingIndicesForFreeCells(self.inputToValueDict['numOfFreeCells'], self.indicesOfFreeCellDict)        
+        ).takingIndicesForFreeCells(self.inputToValueDict['numOfFreeCells'], self.indicesOfFreeCellDict, self.inputToValueDict['sizeOfCard'])        
         self.cardsArray = CardsGenerationClass.CardsGenerationClass(
         ).generateCards(self.inputToValueDict['cards'], self.inputToValueDict['sizeOfCard'], self.indicesOfFreeCellDict)        
         PdfGenerationClass.PdfGenerationClass().CreatePdf(self.cardsArray)
