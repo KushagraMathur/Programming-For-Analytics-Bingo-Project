@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import statistics
+import scipy.stats
+import pandas as pd
 
 
 class GraphPlottingClass:
@@ -17,6 +20,13 @@ class GraphPlottingClass:
         listOfPosStdDevValues = list()
         listOfNegStdDevValues = list()
         numberOfCards = list()
+        Median = {}
+        Skew = {}
+        Kurtosis = {}
+        I_Quartile = {}
+        II_Quartile = {}
+        III_Quartile = {}
+        StandardDeviation = {}
         for key, value in numOfWinnersDict.items():
             numOfWinnersDict[key] = np.array(value)
             listOfAverageValues.append(np.average(numOfWinnersDict[key]))
@@ -27,6 +37,23 @@ class GraphPlottingClass:
             listOfNegStdDevValues.append(np.average(
                 numOfWinnersDict[key]) - np.std(numOfWinnersDict[key]))
             numberOfCards.append(key)
+            Median[key] = statistics.median(value)
+            StandardDeviation = statistics.stdev(value)
+            Skew[key] = scipy.stats.skew(value)
+            Kurtosis[key] = scipy.stats.kurtosis(value)
+            I_Quartile[key] = np.percentile(value, 25)
+            II_Quartile[key] = np.percentile(value, 50)
+            III_Quartile[key] = np.percentile(value, 75)
+        my_dict = {"Median": Median, "Standard Deviation": StandardDeviation, "Skew": Skew,
+                   "Kurtosis": Kurtosis, "25th Percentile": I_Quartile, "50th Percentile": II_Quartile, "75th Percentile": III_Quartile}
+        data = pd.DataFrame(my_dict)
+        data['Skew'] = data['Skew'].replace(np.nan, "nan")
+        data['Kurtosis'] = data['Kurtosis'].replace(np.nan, "nan")
+        file_name = 'Centrality_Data.xlsx'
+        data.to_excel(file_name)
+        print("\n\n", data.to_markdown())
+        print("The data is exported to excel file successfully")
+        
         plt.plot(numberOfCards, listOfAverageValues)
         plt.plot(numberOfCards, listOfPosStdDevValues)
         plt.plot(numberOfCards, listOfNegStdDevValues)
