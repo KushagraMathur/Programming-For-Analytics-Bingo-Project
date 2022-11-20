@@ -8,16 +8,18 @@ class PdfGenerationClass:
     '''
     @description
     Method to transfer the Bingo cards generated into the pdf
+    Include picture input from user to obtain URL source to insert picture in the FREE cells.
     @parameter
     cardsArray- Holds the cards to be added to pdf.
+    sizeofCard - User input on size of cards to be generated and printed to pdf. 
     '''
 
     def CreatePdf(self, cardsArray, sizeOfCard):
         pdf = FPDF()
-        line_height = 10
-        col_width = pdf.w / (sizeOfCard * 1.2)
-        pdf.set_left_margin((pdf.w - sizeOfCard * col_width) / 2)
-        pdf.set_top_margin((pdf.h - (sizeOfCard * line_height + 10)) / 2)
+        lineHeight = 10
+        columnWidth = pdf.w / (sizeOfCard * 1.2)
+        pdf.set_left_margin((pdf.w - sizeOfCard * columnWidth) / 2)
+        pdf.set_top_margin((pdf.h - (sizeOfCard * lineHeight + 10)) / 2)
         start = 1
         response = requests.get(
             'https://img.freepik.com/premium-vector/bingo-lottery-yellow-banner_100478-478.jpg?w=2000')
@@ -27,7 +29,7 @@ class PdfGenerationClass:
             pdf.set_font("Courier", "BI", size=25)
             pdf.set_fill_color(r=138, g=43, b=226)
             pdf.set_text_color(r=252, g=252, b=252)
-            pdf.cell((sizeOfCard * col_width), 10, 'Bingo Card '+str(start), 0, 1, 'C', fill=1)
+            pdf.cell((sizeOfCard * columnWidth), 10, 'Bingo Card '+str(start), 0, 1, 'C', fill=1)
             pdf.set_font("Times", "B", size=15)
             pdf.set_text_color(r=0, g=0, b=0)
             start += 1
@@ -40,11 +42,11 @@ class PdfGenerationClass:
                     if numberString =="-1." or numberString == " -1.":
                         xPos = pdf.get_x()
                         yPos = pdf.get_y()
-                    pdf.multi_cell(col_width, line_height,
+                    pdf.multi_cell(columnWidth, lineHeight,
                                    numberString[:-1], border=1, align='C',
                                    ln=3, max_line_height=pdf.font_size, fill=True)
                     if numberString =="-1." or numberString == " -1.":
                         pdf.image(image, x=xPos, y=yPos,
-                                  w=col_width, h=line_height)
-                pdf.ln(line_height)
+                                  w=columnWidth, h=lineHeight)
+                pdf.ln(lineHeight)
         pdf = pdf.output("Bingo Cards.pdf")
