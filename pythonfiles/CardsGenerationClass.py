@@ -15,14 +15,14 @@ class CardsGenerationClass:
     cardValuesDict - Values are stored in a column to list of array dictionary
     '''
 
-    def generateCardElements(self, numberOfCards, cardRanges, sizeOfCard):
-        start = 1
+    def generateCardElements(self, numberOfCards, cardRanges, sizeOfCardRow, lowerRangeOfCardNo):
+        start = lowerRangeOfCardNo
         cardValuesDict = dict()
         columnValuesSet = set()
         for key, value in cardRanges.items():
             columnValuesSet = set()
             while len(columnValuesSet) != numberOfCards:
-                randomList = random.sample(range(start, value+1), sizeOfCard)
+                randomList = random.sample(range(start, value+1), sizeOfCardRow)
                 columnValuesSet.add(tuple(randomList))
             cardValuesDict[key] = [np.asarray(
                 arrayValue) for arrayValue in columnValuesSet]
@@ -38,14 +38,14 @@ class CardsGenerationClass:
     cardsArray - The array of cards generated.
     '''
 
-    def generateCards(self, numberOfCards, sizeOfCard, indicesOfFreeCellDict):
+    def generateCards(self, numberOfCards, sizeOfCardRow, sizeOfCardCol, indicesOfFreeCellDict, lowerRangeOfCardNo, upperRangeOfCardNo):
         cardRanges = {}
-        for number in range(sizeOfCard):
-            cardRanges[number] = (number+1)*sizeOfCard*3
-        cardValuesDict = self.generateCardElements(numberOfCards, cardRanges, sizeOfCard)
-        cardsArray = np.empty([numberOfCards, sizeOfCard, sizeOfCard])
+        for number in range(sizeOfCardCol):
+            cardRanges[number] = lowerRangeOfCardNo + int((number+1)*(upperRangeOfCardNo - lowerRangeOfCardNo) / sizeOfCardCol)
+        cardValuesDict = self.generateCardElements(numberOfCards, cardRanges, sizeOfCardRow, lowerRangeOfCardNo)
+        cardsArray = np.empty([numberOfCards, sizeOfCardRow, sizeOfCardCol])
         for index in range(0, numberOfCards):
-            for column in range(sizeOfCard):
+            for column in range(sizeOfCardCol):
                 cardsArray[index][:, column] = cardValuesDict[column][index]
         for value in indicesOfFreeCellDict.values():
             cardsArray[:, value[0]-1, value[1]-1] = -1
