@@ -15,7 +15,7 @@ class CallingClass:
         ).takingIndicesForFreeCells(self.inputToValueDict['numOfFreeCells'], self.indicesOfFreeCellDict, self.inputToValueDict['sizeOfCard'])        
         self.cardsArray = CardsGenerationClass.CardsGenerationClass(
         ).generateCards(self.inputToValueDict['cards'], self.inputToValueDict['sizeOfCard'], self.indicesOfFreeCellDict)        
-        PdfGenerationClass.PdfGenerationClass().CreatePdf(self.cardsArray)
+        PdfGenerationClass.PdfGenerationClass().CreatePdf(self.cardsArray, self.inputToValueDict['sizeOfCard'])
         self.numOfWinnersDict = SimulationClass.SimulationsClass().CountSimulations(
             self.inputToValueDict['cards'], self.cardsArray, self.inputToValueDict['simulations'], self.inputToValueDict['sizeOfCard'], self.indicesOfFreeCellDict)
         GraphPlottingClass.GraphPlottingClass().plotLineGraph(self.numOfWinnersDict)
