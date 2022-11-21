@@ -18,8 +18,8 @@ class PdfGenerationClass:
         pdf = FPDF()
         lineHeight = 10
         columnWidth = pdf.w / (sizeOfCard * 1.2)
-        pdf.set_left_margin((pdf.w - sizeOfCard * columnWidth) / 2)
-        pdf.set_top_margin((pdf.h - (sizeOfCard * lineHeight + 10)) / 2)
+        pdf.set_left_margin((pdf.w - sizeOfCardCol * columnWidth) / 2)
+        pdf.set_top_margin((pdf.h - (sizeOfCardRow * lineHeight + 10)) / 2)
         start = 1
         response = requests.get(imageURL)
         image = Image.open(BytesIO(response.content))
