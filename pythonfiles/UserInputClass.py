@@ -47,12 +47,12 @@ class UserInputClass:
                     if userInput < 1 and inputVariable != "numOfFreeCells":
                         raise IncorrectValueException
                     if inputVariable == "numOfFreeCells":
-                        if userInput > inputToValueDict['sizeOfCard']*inputToValueDict['sizeOfCard']:
+                        if userInput > inputToValueDict['sizeOfCardRow']*inputToValueDict['sizeOfCardCol']:
                             raise ValueTooLargeException
                         elif userInput < 0:
                             raise IncorrectValueException
-                        if inputVariable == 'numbersCalledforHistogram' and userInput > (inputToValueDict['upperRangeOfCardNo'] - inputToValueDict['lowerRangeOfCardNo']):
-                            raise numberOutOfRangeException
+                    if inputVariable == 'numbersCalledforHistogram' and userInput > (inputToValueDict['upperRangeOfCardNo'] - inputToValueDict['lowerRangeOfCardNo']):
+                        raise numberOutOfRangeException
                     check = 1
                     inputToValueDict[inputVariable] = userInput
                 
