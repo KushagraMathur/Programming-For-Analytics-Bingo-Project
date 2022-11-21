@@ -17,7 +17,7 @@ class PdfGenerationClass:
     def CreatePdf(self, cardsArray, sizeOfCardRow, sizeOfCardCol, imageURL):
         pdf = FPDF()
         lineHeight = 10
-        columnWidth = pdf.w / (sizeOfCard * 1.2)
+        columnWidth = pdf.w / (sizeOfCardCol * 1.2)
         pdf.set_left_margin((pdf.w - sizeOfCardCol * columnWidth) / 2)
         pdf.set_top_margin((pdf.h - (sizeOfCardRow * lineHeight + 10)) / 2)
         start = 1
