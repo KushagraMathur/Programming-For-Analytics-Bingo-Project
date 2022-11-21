@@ -20,13 +20,13 @@ class GraphPlottingClass:
         listOfPosStdDevValues = list()
         listOfNegStdDevValues = list()
         numberOfCards = list()
-        MedianValueDict = {}
-        SkewValueDict = {}
-        KurtosisValueDict = {}
-        FirstQuartileValueDict = {}
-        SecondQuartileValueDict = {}
-        ThirdQuartileValueDict = {}
-        StandardDeviationValueDict = {}
+        medianValueDict = {}
+        skewValueDict = {}
+        kurtosisValueDict = {}
+        firstQuartileValueDict = {}
+        secondQuartileValueDict = {}
+        thirdQuartileValueDict = {}
+        standardDeviationValueDict = {}
         for key, value in numOfWinnersDict.items():
             numOfWinnersDict[key] = np.array(value)
             listOfAverageValues.append(np.average(numOfWinnersDict[key]))
@@ -37,21 +37,20 @@ class GraphPlottingClass:
             listOfNegStdDevValues.append(np.average(
                 numOfWinnersDict[key]) - np.std(numOfWinnersDict[key]))
             numberOfCards.append(key)
-            MedianValueDict[key] = statistics.median(value)
-            StandardDeviationValueDict[key] = statistics.stdev(value)
-            SkewValueDict[key] = scipy.stats.skew(value)
-            KurtosisValueDict[key] = scipy.stats.kurtosis(value)
-            FirstQuartileValueDict[key] = np.percentile(value, 25)
-            SecondQuartileValueDict[key] = np.percentile(value, 50)
-            ThirdQuartileValueDict[key] = np.percentile(value, 75)
-        CentralityDataDict = {"Median": MedianValueDict, "Standard Deviation": StandardDeviationValueDict, "Skew": SkewValueDict,
-                   "Kurtosis": KurtosisValueDict, "25th Percentile": FirstQuartileValueDict, "50th Percentile":SecondQuartileValueDict, "75th Percentile": ThirdQuartileValueDict}
+            medianValueDict[key] = statistics.median(value)
+            standardDeviationValueDict[key] = statistics.stdev(value)
+            skewValueDict[key] = scipy.stats.skew(value)
+            kurtosisValueDict[key] = scipy.stats.kurtosis(value)
+            firstQuartileValueDict[key] = np.percentile(value, 25)
+            secondQuartileValueDict[key] = np.percentile(value, 50)
+            thirdQuartileValueDict[key] = np.percentile(value, 75)
+        CentralityDataDict = {"Median": medianValueDict, "Standard Deviation": standardDeviationValueDict, "Skew": skewValueDict,
+                   "Kurtosis": kurtosisValueDict, "25th Percentile": firstQuartileValueDict, "50th Percentile":secondQuartileValueDict, "75th Percentile": thirdQuartileValueDict}
         data = pd.DataFrame(CentralityDataDict)
         data['Skew'] = data['Skew'].replace(np.nan, "nan")
         data['Kurtosis'] = data['Kurtosis'].replace(np.nan, "nan")
         data.to_excel('Centrality_Data.xlsx')
-        print("The data is exported to excel file successfully")
-        
+
         plt.plot(numberOfCards, listOfAverageValues)
         plt.plot(numberOfCards, listOfPosStdDevValues)
         plt.plot(numberOfCards, listOfNegStdDevValues)
