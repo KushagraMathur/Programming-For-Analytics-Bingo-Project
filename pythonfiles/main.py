@@ -3,13 +3,11 @@ import CardsGenerationClass
 import SimulationClass
 import PdfGenerationClass
 import GraphPlottingClass
-from collections import defaultdict
-
-# https://img.freepik.com/premium-vector/bingo-lottery-yellow-banner_100478-478.jpg?w=2000
+from collections import defaultdict, OrderedDict
 
 class CallingClass:
     def run(self):
-        self.inputToValueDict = {'cards': 0, 'simulations': 0, 'sizeOfCardRow': 0, 'sizeOfCardCol': 0, 'lowerRangeOfCardNo': 0, 'upperRangeOfCardNo': 0, 'imageURL': 0, 'numbersCalledforHistogram': 0, 'numOfFreeCells': 0}
+        self.inputToValueDict = OrderedDict({'cards': 0, 'simulations': 0, 'sizeOfCardRow': 0, 'sizeOfCardCol': 0, 'lowerRangeOfCardNo': 0, 'upperRangeOfCardNo': 0, 'imageURL': 0, 'numbersCalledforHistogram': 0, 'numOfFreeCells': 0})
         self.inputToValueDict = UserInputClass.UserInputClass(
         ).takingInputsFromUser(self.inputToValueDict)
         self.indicesOfFreeCellDict = defaultdict(list)        
