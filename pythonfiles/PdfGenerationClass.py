@@ -11,7 +11,9 @@ class PdfGenerationClass:
     Include picture input from user to obtain URL source to insert picture in the FREE cells.
     @parameter
     cardsArray- Holds the cards to be added to pdf.
-    sizeofCard - User input on size of cards to be generated and printed to pdf. 
+    sizeOfCardRow- The number of rows in a card specified by user.
+    sizeOfCardCol- The number of columns in a card specified by user.
+    imageURL- URL of the image to be inserted in free cell, specified by user.
     '''
 
     def CreatePdf(self, cardsArray, sizeOfCardRow, sizeOfCardCol, imageURL):
