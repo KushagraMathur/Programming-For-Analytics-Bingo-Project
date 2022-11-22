@@ -42,9 +42,9 @@ class SimulationsClass:
     numOfSim- The number of simulations entered by user.
     sizeOfCardRow- The number of rows in a card specified by user.
     sizeOfCardCol- The number of columns in a card specified by user.
-    indicesOfFreeCellDict- 
-    lowerRangeOfCardNo- 
-    upperRangeOfCardNo- 
+    indicesOfFreeCellDict- The dictionary of all the indices (row, column) for free cells
+    lowerRangeOfCardNo- Lower range of number in a card specified by user
+    upperRangeOfCardNo- Upper range of number in a card specified by user
     '''
 
     def CountSimulations(self, numberOfCards, cardsArray, numOfSim, sizeOfCardRow, sizeOfCardCol, indicesOfFreeCellDict, lowerRangeOfCardNo, upperRangeOfCardNo):
