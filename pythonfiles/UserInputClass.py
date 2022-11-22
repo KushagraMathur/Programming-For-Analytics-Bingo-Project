@@ -28,7 +28,7 @@ class UserInputClass:
             while check == 0:
                 try:
                     if inputVariable == 'imageURL':
-                        while (inputToValueDict['upperRangeOfCardNo'] - inputToValueDict['lowerRangeOfCardNo']) <= inputToValueDict['sizeOfCardRow']*inputToValueDict['sizeOfCardCol']:
+                        while (inputToValueDict['upperRangeOfCardNo'] - inputToValueDict['lowerRangeOfCardNo'] + 1) <= (inputToValueDict['sizeOfCardRow']*inputToValueDict['sizeOfCardCol'])*3:
                             print(
                                 'Incorrect range of card numbers entered. Number range cannot be smaller than thrice the size of card (i.e. 3* Card Row Size * Card Col Size) Pls try again: ')
                             inputToValueDict['lowerRangeOfCardNo'] = int(
