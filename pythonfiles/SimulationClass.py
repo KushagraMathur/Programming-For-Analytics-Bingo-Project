@@ -11,7 +11,8 @@ class SimulationsClass:
     bingoCardsSet- Contains the indices of cards that have reached bingo.
     testArray- An array equal to size of cards array. Contains one(1) for free cells and zeros(0) for others. 
                Zeros are replaced by ones if a number is found in cards array.
-    sizeOfCard- The size of card specified by user.
+    sizeOfCardRow- The number of rows in a card specified by user.
+    sizeOfCardCol- The number of columns in a card specified by user.
     '''
 
     def checkBingo(self, countCardsSet, bingoCardsSet, testArray, sizeOfCardRow, sizeOfCardCol):
@@ -39,7 +40,11 @@ class SimulationsClass:
     numberOfCards - The number of cards created by user.
     cardsArray- An array equal to size of cards array.
     numOfSim- The number of simulations entered by user.
-    sizeOfCard- The size of card specified by user.
+    sizeOfCardRow- The number of rows in a card specified by user.
+    sizeOfCardCol- The number of columns in a card specified by user.
+    indicesOfFreeCellDict- 
+    lowerRangeOfCardNo- 
+    upperRangeOfCardNo- 
     '''
 
     def CountSimulations(self, numberOfCards, cardsArray, numOfSim, sizeOfCardRow, sizeOfCardCol, indicesOfFreeCellDict, lowerRangeOfCardNo, upperRangeOfCardNo):
