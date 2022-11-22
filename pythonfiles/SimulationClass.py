@@ -17,13 +17,13 @@ class SimulationsClass:
     def checkBingo(self, countCardsSet, bingoCardsSet, testArray, sizeOfCardRow, sizeOfCardCol):
         if sizeOfCardRow == sizeOfCardCol:
             for index in countCardsSet:
-                if np.diagonal(self.testArray[index]).sum() == sizeOfCard:
+                if np.diagonal(self.testArray[index]).sum() == sizeOfCardRow:
                     bingoCardsSet.add(index)
-                elif (np.diag(np.fliplr(self.testArray[index])).sum()) == sizeOfCard:
+                elif (np.diag(np.fliplr(self.testArray[index])).sum()) == sizeOfCardRow:
                     bingoCardsSet.add(index)
-                elif sizeOfCard in np.sum(testArray[index], axis=0):
+                elif sizeOfCardRow in np.sum(testArray[index], axis=0):
                     bingoCardsSet.add(index)
-                elif sizeOfCard in np.sum(testArray[index], axis=1):
+                elif sizeOfCardRow in np.sum(testArray[index], axis=1):
                     bingoCardsSet.add(index)
         else:
             for index in countCardsSet:
