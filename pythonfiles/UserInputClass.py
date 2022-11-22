@@ -10,7 +10,7 @@ class ValueTooLargeException(Error):
     '''Raised when the input value for number of free cells is greater than total number of cells in a bingo card'''
     pass
 
-class numberOutOfRangeException(Error):
+class NumberOutOfRangeException(Error):
     '''Raised when the input value for number of numbers called for generating a histogram is greater than total number range'''
     pass
 
@@ -30,7 +30,7 @@ class UserInputClass:
                     if inputVariable == 'imageURL':
                         while (inputToValueDict['upperRangeOfCardNo'] - inputToValueDict['lowerRangeOfCardNo']) <= inputToValueDict['sizeOfCardRow']*inputToValueDict['sizeOfCardCol']:
                             print(
-                                'Incorrect range of card numbers entered. Number range cannot be smaller or equal to size of card. Pls try again: ')
+                                'Incorrect range of card numbers entered. Number range cannot be smaller than thrice the size of card (i.e. 3* Card Row Size * Card Col Size) Pls try again: ')
                             inputToValueDict['lowerRangeOfCardNo'] = int(
                                 input('Enter the lower range of card number:'))
                             inputToValueDict['upperRangeOfCardNo'] = int(
@@ -52,7 +52,7 @@ class UserInputClass:
                         elif userInput < 0:
                             raise IncorrectValueException
                     if inputVariable == 'numbersCalledForHistogram' and userInput > (inputToValueDict['upperRangeOfCardNo'] - inputToValueDict['lowerRangeOfCardNo']):
-                        raise numberOutOfRangeException
+                        raise NumberOutOfRangeException
                     check = 1
                     inputToValueDict[inputVariable] = userInput
                 
@@ -62,11 +62,17 @@ class UserInputClass:
                 except ValueTooLargeException:
                     print(
                         'Incorrect number of free cells entered. Number of free cells cannot be grater than size of card.')
-                except numberOutOfRangeException:
+                except NumberOutOfRangeException:
                     print(
                         'Incorrect input for number of number called, value should be within the card numbers range. Pls try again.')
         return inputToValueDict
     
+    '''
+    @description
+    Method to take user input for indices of free cells.
+    @return
+    indicesOfFreeCellDict - The dictionary of all the indices (row, column) for free cells.
+    '''
     def takingIndicesForFreeCells(self, numOfFreeCells, indicesOfFreeCellDict, sizeOfCardRow, sizeOfCardCol):
         for key in range(0, numOfFreeCells):
             for indice in ['row', 'column']:
