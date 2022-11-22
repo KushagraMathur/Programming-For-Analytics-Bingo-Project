@@ -51,7 +51,7 @@ class UserInputClass:
                             raise ValueTooLargeException
                         elif userInput < 0:
                             raise IncorrectValueException
-                    if inputVariable == 'numbersCalledforHistogram' and userInput > (inputToValueDict['upperRangeOfCardNo'] - inputToValueDict['lowerRangeOfCardNo']):
+                    if inputVariable == 'numbersCalledForHistogram' and userInput > (inputToValueDict['upperRangeOfCardNo'] - inputToValueDict['lowerRangeOfCardNo']):
                         raise numberOutOfRangeException
                     check = 1
                     inputToValueDict[inputVariable] = userInput
