@@ -11,25 +11,26 @@ class PdfGenerationClass:
     Include picture input from user to obtain URL source to insert picture in the FREE cells.
     @parameter
     cardsArray- Holds the cards to be added to pdf.
-    sizeofCard - User input on size of cards to be generated and printed to pdf. 
+    sizeOfCardRow- The number of rows in a card specified by user.
+    sizeOfCardCol- The number of columns in a card specified by user.
+    imageURL- URL of the image to be inserted in free cell, specified by user.
     '''
 
-    def CreatePdf(self, cardsArray, sizeOfCard):
+    def CreatePdf(self, cardsArray, sizeOfCardRow, sizeOfCardCol, imageURL):
         pdf = FPDF()
         lineHeight = 10
-        columnWidth = pdf.w / (sizeOfCard * 1.2)
-        pdf.set_left_margin((pdf.w - sizeOfCard * columnWidth) / 2)
-        pdf.set_top_margin((pdf.h - (sizeOfCard * lineHeight + 10)) / 2)
+        columnWidth = pdf.w / (sizeOfCardCol * 1.2)
+        pdf.set_left_margin((pdf.w - sizeOfCardCol * columnWidth) / 2)
+        pdf.set_top_margin((pdf.h - (sizeOfCardRow * lineHeight + 10)) / 2)
         start = 1
-        response = requests.get(
-            'https://img.freepik.com/premium-vector/bingo-lottery-yellow-banner_100478-478.jpg?w=2000')
+        response = requests.get(imageURL)
         image = Image.open(BytesIO(response.content))
         for index in cardsArray:
             pdf.add_page()
             pdf.set_font("Courier", "BI", size=25)
             pdf.set_fill_color(r=138, g=43, b=226)
             pdf.set_text_color(r=252, g=252, b=252)
-            pdf.cell((sizeOfCard * columnWidth), 10, 'Bingo Card '+str(start), 0, 1, 'C', fill=1)
+            pdf.cell((sizeOfCardCol * columnWidth), 10, 'Bingo Card '+str(start), 0, 1, 'C', fill=1)
             pdf.set_font("Times", "B", size=15)
             pdf.set_text_color(r=0, g=0, b=0)
             start += 1
