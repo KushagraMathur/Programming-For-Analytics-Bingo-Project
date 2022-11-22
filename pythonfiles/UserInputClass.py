@@ -18,6 +18,9 @@ class UserInputClass:
     '''
     @description
     Method to accept values from user.
+    @parameter
+    inputToValueDict- The inputs taken in a dictionary for number of cards, simulations, card row size, card column size, 
+                      lower range of card number, upper range of card number, URL for image inserted in free cell, numbers called for histogram and number of free cells
     @return
     numberOfCards - The number of cards to be generated.
     '''
@@ -70,6 +73,11 @@ class UserInputClass:
     '''
     @description
     Method to take user input for indices of free cells.
+    @parameter
+    numOfFreeCells- The number of free cells per card specified by user.
+    indicesOfFreeCellDict- The dictionary of all the indices (row, column) for free cells.
+    sizeOfCardRow- The number of rows in a card specified by user.
+    sizeOfCardCol- The number of columns in a card specified by user.
     @return
     indicesOfFreeCellDict - The dictionary of all the indices (row, column) for free cells.
     '''
