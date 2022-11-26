@@ -47,9 +47,9 @@ class TKinterGUIClass:
                                  self.bingoConstantsClassInstance.SIZE_OF_CARD_COL: 0,
                                  self.bingoConstantsClassInstance.LOWER_RANGE_OF_CARD_NUMBERS: 0,
                                  self.bingoConstantsClassInstance.UPPER_RANGE_OF_CARD_NUMBERS: 0,
-                                 self.bingoConstantsClassInstance.IMAGE_REQUESTED: '',
                                  self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS: 0,
-                                 self.bingoConstantsClassInstance.NUMBER_OF_FREE_CELLS: 0}
+                                 self.bingoConstantsClassInstance.NUMBER_OF_FREE_CELLS: 0,
+                                 self.bingoConstantsClassInstance.IMAGE_REQUESTED: ''}
         self.indicesOfFreeCellDict = defaultdict(list)
 
         # Creating the bingo input form
@@ -101,26 +101,26 @@ class TKinterGUIClass:
         upperRangeNumberLabel.grid(row=7, column=0)
         self.upperRangeNumberEntry.grid(row=7, column=1)
 
-        imageUrlLabel = tk.Label(
-            master, text='Enter the image URL: ')
-        self.imageUrlEntry = tk.Entry(
-            master, textvariable=imageUrlLabel)
-        imageUrlLabel.grid(row=8, column=0)
-        self.imageUrlEntry.grid(row=8, column=1)
-
         numberOfNumbersLabel = tk.Label(
             master, text='Enter the number of numbers for histogram: ')
         self.numberOfNumbersEntry = tk.Entry(
             master, textvariable=numberOfNumbersLabel)
-        numberOfNumbersLabel.grid(row=9, column=0)
-        self.numberOfNumbersEntry.grid(row=9, column=1)
+        numberOfNumbersLabel.grid(row=8, column=0)
+        self.numberOfNumbersEntry.grid(row=8, column=1)
 
         numOfFreeCellsLabel = tk.Label(
             master, text='Number of free cells: ')
         self.numOfFreeCellsEntry = tk.Entry(
             master, textvariable=numOfFreeCellsLabel)
-        numOfFreeCellsLabel.grid(row=10, column=0)
-        self.numOfFreeCellsEntry.grid(row=10, column=1)
+        numOfFreeCellsLabel.grid(row=9, column=0)
+        self.numOfFreeCellsEntry.grid(row=9, column=1)
+
+        imageUrlLabel = tk.Label(
+            master, text='Enter the image URL: ')
+        self.imageUrlEntry = tk.Entry(
+            master, textvariable=imageUrlLabel)
+        imageUrlLabel.grid(row=10, column=0)
+        self.imageUrlEntry.grid(row=10, column=1)
 
         posOfFreeCellsText = tk.Label(
             master, text='Please enter the rows and columns indexes of the free cells. For multiple free cells, separate indexes by commas. Ex Rows: 1,3,5 Columns: 2,4,3 ')
@@ -169,9 +169,9 @@ class TKinterGUIClass:
                                              self.bingoConstantsClassInstance.SIZE_OF_CARD_COL: self.numOfCardColumnsEntry.get(),
                                              self.bingoConstantsClassInstance.LOWER_RANGE_OF_CARD_NUMBERS: self.lowerRangeNumberEntry.get(),
                                              self.bingoConstantsClassInstance.UPPER_RANGE_OF_CARD_NUMBERS: self.upperRangeNumberEntry.get(),
-                                             self.bingoConstantsClassInstance.IMAGE_REQUESTED: self.imageUrlEntry.get(),
                                              self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS: self.numberOfNumbersEntry.get(),
-                                             self.bingoConstantsClassInstance.NUMBER_OF_FREE_CELLS: self.numOfFreeCellsEntry.get()})
+                                             self.bingoConstantsClassInstance.NUMBER_OF_FREE_CELLS: self.numOfFreeCellsEntry.get(),
+                                             self.bingoConstantsClassInstance.IMAGE_REQUESTED: self.imageUrlEntry.get()})
         self.indicesOfFreeCellDict = defaultdict(list)
         for inputVariable in self.inputToValueDict.keys():
             try:
@@ -184,11 +184,7 @@ class TKinterGUIClass:
                             raise ValueTooLargeException
                         elif userInput < 0:
                             raise IncorrectValueException
-                else:
-                    response = requests.get(
-                        self.inputToValueDict[inputVariable])
-                    userInput = Image.open(BytesIO(response.content))
-                self.inputToValueDict[inputVariable] = userInput
+                    self.inputToValueDict[inputVariable] = userInput
             except (IncorrectValueException, ValueError):
                 messagebox.showerror(
                     message='Incorrect value of '+inputVariable + ' entered. Value can be only positive integer values greater than 0.')
@@ -202,6 +198,15 @@ class TKinterGUIClass:
                     message='Incorrect value has been entered. Please re-check the inputs. Error: '+e)
                 return
         if self.inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_FREE_CELLS] != 0:
+            try:
+                response = requests.get(
+                    self.inputToValueDict[self.bingoConstantsClassInstance.IMAGE_REQUESTED])
+                imageResponse = Image.open(BytesIO(response.content))
+                self.inputToValueDict[self.bingoConstantsClassInstance.IMAGE_REQUESTED] = imageResponse
+            except:
+                messagebox.showerror(
+                    message='Incorrect value entered for image URL. Please enter valid URL')
+                return
             if self.freeCellRowsEntry.get() == '' or self.freeCellColumnsEntry.get() == '':
                 messagebox.showerror(
                     message='Please provide the free cells index postions')
@@ -230,23 +235,27 @@ class TKinterGUIClass:
                     messagebox.showerror(
                         message='Value of row or column is too large. Value should be <= size of the row or column')
                     return
+        else:
+            if len(self.freeCellRowsEntry.get()) or len(self.freeCellColumnsEntry.get()) or len(self.inputToValueDict[self.bingoConstantsClassInstance.IMAGE_REQUESTED]):
+                messagebox.showwarning(
+                    message='Number of free cells is 0. Free cell positions, image URL will not be considered in Card Generation.')
         rangePerColumn = int((self.inputToValueDict[self.bingoConstantsClassInstance.UPPER_RANGE_OF_CARD_NUMBERS] -
                              self.inputToValueDict[self.bingoConstantsClassInstance.LOWER_RANGE_OF_CARD_NUMBERS] + 1)/self.inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_ROW])
         maxPossibleCards = 1
         for i in range(self.inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_ROW]):
             maxPossibleCards = maxPossibleCards*(rangePerColumn)
             rangePerColumn -= 1
-        if (self.inputToValueDict[self.bingoConstantsClassInstance.CARDS] > int(maxPossibleCards/2)):
-            messagebox.showerror(
-                message='Maximum number of cards should be less than '+str(int(maxPossibleCards/2)))
-            return
         if (self.inputToValueDict[self.bingoConstantsClassInstance.UPPER_RANGE_OF_CARD_NUMBERS] < self.inputToValueDict[self.bingoConstantsClassInstance.LOWER_RANGE_OF_CARD_NUMBERS]):
             messagebox.showerror(
                 message='The Upper range value must be greater than lower range value')
             return
         if (self.inputToValueDict[self.bingoConstantsClassInstance.UPPER_RANGE_OF_CARD_NUMBERS] - self.inputToValueDict[self.bingoConstantsClassInstance.LOWER_RANGE_OF_CARD_NUMBERS] + 1) < (self.inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_ROW]*self.inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_COL])*3:
             messagebox.showerror(
-                message='Incorrect Number Range values. The Range must be atleast 3 times the number of bingo numbers in card (i.e. 3* Card Row Size * Card Col Size). Please try again.')
+                message='Incorrect Number Range values. The Range must be atleast 3 times the size of the card (i.e. 3* Card Row Size * Card Col Size). Please try again.')
+            return
+        if (self.inputToValueDict[self.bingoConstantsClassInstance.CARDS] > int(maxPossibleCards/2)):
+            messagebox.showerror(
+                message='Maximum number of cards should be less than '+str(int(maxPossibleCards/2)))
             return
         if (self.inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS] > (self.inputToValueDict[self.bingoConstantsClassInstance.UPPER_RANGE_OF_CARD_NUMBERS] - self.inputToValueDict[self.bingoConstantsClassInstance.LOWER_RANGE_OF_CARD_NUMBERS] + 1)):
             messagebox.showerror(
