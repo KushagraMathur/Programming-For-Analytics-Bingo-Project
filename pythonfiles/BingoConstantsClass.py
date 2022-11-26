@@ -1,28 +1,10 @@
-class SingletonMeta(type):
-    """
-    Implementing the Singleton metaclass
-    """
-
-    _instances = {}
-
-    def __call__(className, *args, **kwargs):
-        """
-        Possible changes to the value of the `__init__` argument do not affect
-        the returned instance.
-        """
-        if className not in className._instances:
-            instance = super().__call__(*args, **kwargs)
-            className._instances[className] = instance
-        return className._instances[className]
-
-
 '''
 @description
 BingoConstantsClass - Class which contains constants referred in the program.
 '''
 
 
-class BingoConstantsClass(metaclass=SingletonMeta):
+class BingoConstantsClass():
     CARDS = 'cards'
     SIMULATIONS = 'simulations'
     SIZE_OF_CARD_ROW = 'card row size'
