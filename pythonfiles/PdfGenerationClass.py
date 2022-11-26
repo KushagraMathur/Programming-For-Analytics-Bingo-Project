@@ -1,36 +1,48 @@
 from fpdf import FPDF
 import numpy as np
-from PIL import Image
-import requests
-from io import BytesIO
+import BingoConstantsClass
+
+'''
+@description
+PdfGenerationClass - Class which contains the pdf creation logic for the cards.
+'''
+
 
 class PdfGenerationClass:
     '''
     @description
-    Method to transfer the Bingo cards generated into the pdf
-    Include picture input from user to obtain URL source to insert picture in the FREE cells.
-    @parameter
-    cardsArray- Holds the cards to be added to pdf.
-    sizeOfCardRow- The number of rows in a card specified by user.
-    sizeOfCardCol- The number of columns in a card specified by user.
-    imageURL- URL of the image to be inserted in free cell, specified by user.
+    Initial constructor method.
     '''
 
-    def CreatePdf(self, cardsArray, sizeOfCardRow, sizeOfCardCol, imageURL):
+    def __init__(self):
+        self.bingoConstantsClassInstance = BingoConstantsClass.BingoConstantsClass()
+
+    '''
+    @description
+    Method to transfer the Bingo cards generated into the pdf
+    Picture specified by user is added in the FREE cells.
+    @parameter
+    cardsArray- Holds the cards to be added to pdf.
+    inputToValueDict - Dictionary with the user input values.
+    '''
+
+    def CreatePdf(self, cardsArray, inputToValueDict):
         pdf = FPDF()
         lineHeight = 10
-        columnWidth = pdf.w / (sizeOfCardCol * 1.2)
-        pdf.set_left_margin((pdf.w - sizeOfCardCol * columnWidth) / 2)
-        pdf.set_top_margin((pdf.h - (sizeOfCardRow * lineHeight + 10)) / 2)
+        columnWidth = pdf.w / \
+            (inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_COL] * 1.2)
+        pdf.set_left_margin(
+            (pdf.w - inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_COL] * columnWidth) / 2)
+        pdf.set_top_margin(
+            (pdf.h - (inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_ROW] * lineHeight + 10)) / 2)
         start = 1
-        response = requests.get(imageURL)
-        image = Image.open(BytesIO(response.content))
         for index in cardsArray:
             pdf.add_page()
             pdf.set_font("Courier", "BI", size=25)
             pdf.set_fill_color(r=138, g=43, b=226)
             pdf.set_text_color(r=252, g=252, b=252)
-            pdf.cell((sizeOfCardCol * columnWidth), 10, 'Bingo Card '+str(start), 0, 1, 'C', fill=1)
+            pdf.cell((inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_COL] * columnWidth), 10,
+                     'Bingo Card '+str(start), 0, 1, 'C', fill=1)
             pdf.set_font("Times", "B", size=15)
             pdf.set_text_color(r=0, g=0, b=0)
             start += 1
@@ -40,14 +52,14 @@ class PdfGenerationClass:
                 textArray = textArray[1:-1]
                 for numberString in textArray.split(','):
                     pdf.set_fill_color(r=252, g=100, b=150)
-                    if numberString =="-1." or numberString == " -1.":
+                    if numberString == "-1." or numberString == " -1.":
                         xPos = pdf.get_x()
                         yPos = pdf.get_y()
                     pdf.multi_cell(columnWidth, lineHeight,
                                    numberString[:-1], border=1, align='C',
                                    ln=3, max_line_height=pdf.font_size, fill=True)
-                    if numberString =="-1." or numberString == " -1.":
-                        pdf.image(image, x=xPos, y=yPos,
+                    if numberString == "-1." or numberString == " -1.":
+                        pdf.image(inputToValueDict[self.bingoConstantsClassInstance.IMAGE_REQUESTED], x=xPos, y=yPos,
                                   w=columnWidth, h=lineHeight)
                 pdf.ln(lineHeight)
         pdf = pdf.output("Bingo Cards.pdf")
