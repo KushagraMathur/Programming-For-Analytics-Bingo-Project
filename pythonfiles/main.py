@@ -288,9 +288,9 @@ class TKinterGUIClass:
                 self.numOfWinnersDict = self.callingClassInstance.runSimulations(
                     self.cardsArray)
                 self.callingClassInstance.plottingTheGraphs(
-                    self.numOfWinnersDict)
+                    self.numOfWinnersDict, self.inputToValueDict)
                 messagebox.showinfo(
-                    message='Success!! Your simulations have run successfully. More information on the simulations is available in an Excel file')
+                    message='Success!! Your simulations have run successfully. More information on the simulations is available in an Excel file and the graphs can be found as images')
             else:
                 messagebox.showerror(
                     message='Please generate cards before running simulations')

@@ -3,6 +3,7 @@ import numpy as np
 import statistics
 import scipy.stats
 import pandas as pd
+import BingoConstantsClass
 
 '''
 @description
@@ -13,12 +14,20 @@ GraphPlottingClass - Class which contains the results display logic like plot cr
 class GraphPlottingClass:
     '''
     @description
+    Initial constructor method.
+    '''
+
+    def __init__(self):
+        self.bingoConstantsClassInstance = BingoConstantsClass.BingoConstantsClass()
+
+    '''
+    @description
     Method for plotting the line graph for total numbers called vs the number of winners.
     @parameter
     numOfWinnersDict - Dictionary containing the total numbers called to the list of winners at each turn for each simulation.
     '''
 
-    def plotLineGraph(self, numOfWinnersDict):
+    def plotLineGraph(self, numOfWinnersDict, inputToValueDict):
         listOfAverageValues = []
         listOfMaxValues = []
         listOfMinValues = []
@@ -58,10 +67,25 @@ class GraphPlottingClass:
 
         plt.fill_between(listOfTurns, listOfPosStdDevValues,
                          listOfNegStdDevValues, color='skyblue', alpha=0.5)
-        plt.plot(listOfTurns, listOfMaxValues, color='skyblue', alpha=0.5, linestyle='dashed')
-        plt.plot(listOfTurns, listOfMinValues, color='skyblue', alpha=0.5, linestyle='dashed')
+        plt.plot(listOfTurns, listOfMaxValues, color='skyblue',
+                 alpha=0.5, linestyle='dashed')
+        plt.plot(listOfTurns, listOfMinValues, color='skyblue',
+                 alpha=0.5, linestyle='dashed')
         plt.plot(listOfTurns, listOfAverageValues, color='blue')
         plt.ylabel('Winners')
         plt.xlabel('Total Numbers Called')
         plt.title('Number of winners per number called')
+        plt.savefig('Graph.jpeg')
+        plt.show()
+
+        # Creating histogram
+        fig, ax = plt.subplots(figsize=(7, 7))
+        ax.hist(numOfWinnersDict[inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS]],
+                inputToValueDict[self.bingoConstantsClassInstance.CARDS])
+        plt.ylabel('Frequency of Winners')
+        plt.xlabel('Numbers of Winners')
+        plt.title(
+            "Number of winners in each simulation after calling " + str(inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS]) + " numbers")
+        fig.tight_layout()
+        plt.savefig('Histogram.jpeg')
         plt.show()
