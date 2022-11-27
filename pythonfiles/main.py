@@ -195,7 +195,7 @@ class TKinterGUIClass:
                 return
             except Exception as e:
                 messagebox.showerror(
-                    message='Incorrect value has been entered. Please re-check the inputs. Error: '+e)
+                    message='Incorrect value has been entered. Please re-check the inputs. Error: '+str(e))
                 return
         if self.inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_FREE_CELLS] != 0:
             try:
@@ -274,7 +274,7 @@ class TKinterGUIClass:
                     message='Success!! Your cards are generated in a pdf file. You can now run the Bingo Simulation')
         except Exception as e:
             messagebox.showerror(
-                message='There is an error in the cards generation. Error: '+e)
+                message='There is an error in the cards generation. Error: '+str(e))
         return
 
     '''
@@ -297,7 +297,7 @@ class TKinterGUIClass:
                 return
         except Exception as e:
             messagebox.showerror(
-                message='An error occured in the simulations. Error: '+e)
+                message='An error occured in the simulations. Error: '+str(e))
             return
 
     '''
