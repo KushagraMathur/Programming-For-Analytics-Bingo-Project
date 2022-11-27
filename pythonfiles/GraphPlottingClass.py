@@ -56,13 +56,12 @@ class GraphPlottingClass:
         data['Kurtosis'] = data['Kurtosis'].replace(np.nan, "nan")
         data.to_excel('Centrality_Data.xlsx')
 
-        plt.plot(listOfTurns, listOfAverageValues)
-        plt.plot(listOfTurns, listOfPosStdDevValues)
-        plt.plot(listOfTurns, listOfNegStdDevValues)
         plt.fill_between(listOfTurns, listOfPosStdDevValues,
-                         listOfNegStdDevValues, color='cyan', alpha=0.5)
-        plt.plot(listOfTurns, listOfMaxValues, linestyle='dashed')
-        plt.plot(listOfTurns, listOfMinValues, linestyle='dashed')
+                         listOfNegStdDevValues, color='skyblue', alpha=0.5)
+        plt.plot(listOfTurns, listOfMaxValues, color='skyblue', alpha=0.5, linestyle='dashed')
+        plt.plot(listOfTurns, listOfMinValues, color='skyblue', alpha=0.5, linestyle='dashed')
+        plt.plot(listOfTurns, listOfAverageValues, color='blue')
         plt.ylabel('Winners')
         plt.xlabel('Total Numbers Called')
+        plt.title('Number of winners per number called')
         plt.show()
