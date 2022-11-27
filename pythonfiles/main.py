@@ -240,7 +240,7 @@ class TKinterGUIClass:
                 messagebox.showwarning(
                     message='Number of free cells is 0. Free cell positions, image URL will not be considered in Card Generation.')
         rangePerColumn = int((self.inputToValueDict[self.bingoConstantsClassInstance.UPPER_RANGE_OF_CARD_NUMBERS] -
-                             self.inputToValueDict[self.bingoConstantsClassInstance.LOWER_RANGE_OF_CARD_NUMBERS] + 1)/self.inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_ROW])
+                             self.inputToValueDict[self.bingoConstantsClassInstance.LOWER_RANGE_OF_CARD_NUMBERS] + 1)/self.inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_COL])
         maxPossibleCards = 1
         for i in range(self.inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_ROW]):
             maxPossibleCards = maxPossibleCards*(rangePerColumn)
@@ -259,7 +259,7 @@ class TKinterGUIClass:
             return
         if (self.inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS] > (self.inputToValueDict[self.bingoConstantsClassInstance.UPPER_RANGE_OF_CARD_NUMBERS] - self.inputToValueDict[self.bingoConstantsClassInstance.LOWER_RANGE_OF_CARD_NUMBERS] + 1)):
             messagebox.showerror(
-                message='Incorrect turn for number frequency Histogram. The turn must be between the upper and lower range of the card numbers.')
+                message='Incorrect turn for number frequency Histogram. The number must be between one and the difference between upper and lower range of the card numbers')
             return
         if (self.inputToValueDict[self.bingoConstantsClassInstance.SIMULATIONS] < 2):
             messagebox.showerror(
