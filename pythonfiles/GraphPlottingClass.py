@@ -4,6 +4,11 @@ import statistics
 import scipy.stats
 import pandas as pd
 
+'''
+@description
+GraphPlottingClass - Class which contains the results display logic like plot creation and extra statistics calculations.
+'''
+
 
 class GraphPlottingClass:
     '''
@@ -14,12 +19,12 @@ class GraphPlottingClass:
     '''
 
     def plotLineGraph(self, numOfWinnersDict):
-        listOfAverageValues = list()
-        listOfMaxValues = list()
-        listOfMinValues = list()
-        listOfPosStdDevValues = list()
-        listOfNegStdDevValues = list()
-        numberOfCards = list()
+        listOfAverageValues = []
+        listOfMaxValues = []
+        listOfMinValues = []
+        listOfPosStdDevValues = []
+        listOfNegStdDevValues = []
+        listOfTurns = []
         medianValueDict = {}
         skewValueDict = {}
         kurtosisValueDict = {}
@@ -36,7 +41,7 @@ class GraphPlottingClass:
                 numOfWinnersDict[key]) + np.std(numOfWinnersDict[key]))
             listOfNegStdDevValues.append(np.average(
                 numOfWinnersDict[key]) - np.std(numOfWinnersDict[key]))
-            numberOfCards.append(key)
+            listOfTurns.append(key)
             medianValueDict[key] = statistics.median(value)
             standardDeviationValueDict[key] = statistics.stdev(value)
             skewValueDict[key] = scipy.stats.skew(value)
@@ -45,19 +50,19 @@ class GraphPlottingClass:
             secondQuartileValueDict[key] = np.percentile(value, 50)
             thirdQuartileValueDict[key] = np.percentile(value, 75)
         CentralityDataDict = {"Median": medianValueDict, "Standard Deviation": standardDeviationValueDict, "Skew": skewValueDict,
-                   "Kurtosis": kurtosisValueDict, "25th Percentile": firstQuartileValueDict, "50th Percentile":secondQuartileValueDict, "75th Percentile": thirdQuartileValueDict}
+                              "Kurtosis": kurtosisValueDict, "25th Percentile": firstQuartileValueDict, "50th Percentile": secondQuartileValueDict, "75th Percentile": thirdQuartileValueDict}
         data = pd.DataFrame(CentralityDataDict)
         data['Skew'] = data['Skew'].replace(np.nan, "nan")
         data['Kurtosis'] = data['Kurtosis'].replace(np.nan, "nan")
         data.to_excel('Centrality_Data.xlsx')
 
-        plt.plot(numberOfCards, listOfAverageValues)
-        plt.plot(numberOfCards, listOfPosStdDevValues)
-        plt.plot(numberOfCards, listOfNegStdDevValues)
-        plt.fill_between(numberOfCards, listOfPosStdDevValues,
+        plt.plot(listOfTurns, listOfAverageValues)
+        plt.plot(listOfTurns, listOfPosStdDevValues)
+        plt.plot(listOfTurns, listOfNegStdDevValues)
+        plt.fill_between(listOfTurns, listOfPosStdDevValues,
                          listOfNegStdDevValues, color='cyan', alpha=0.5)
-        plt.plot(numberOfCards, listOfMaxValues, linestyle='dashed')
-        plt.plot(numberOfCards, listOfMinValues, linestyle='dashed')
+        plt.plot(listOfTurns, listOfMaxValues, linestyle='dashed')
+        plt.plot(listOfTurns, listOfMinValues, linestyle='dashed')
         plt.ylabel('Winners')
         plt.xlabel('Total Numbers Called')
         plt.show()
