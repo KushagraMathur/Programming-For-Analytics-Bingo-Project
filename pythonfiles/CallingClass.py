@@ -55,7 +55,8 @@ class CallingClass:
     @description
     Method to display the results of the simulations
     @parameter
-    numOfWinnersDict - Dictionary mapping each turn to the total number of winners at that turn in each simulation
+    numOfWinnersDict - Dictionary mapping each turn to the total number of winners at that turn in each simulation.
+    inputToValueDict - Dictionary with user input values.
     '''
 
     def plottingTheGraphs(self, numOfWinnersDict, inputToValueDict):
