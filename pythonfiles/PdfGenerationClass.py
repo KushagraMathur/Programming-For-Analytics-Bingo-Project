@@ -28,14 +28,20 @@ class PdfGenerationClass:
 
     def CreatePdf(self, cardsArray, inputToValueDict):
         pdf = FPDF()
+
+        #Setting the cell size of the BINGO cards
         lineHeight = 10
         columnWidth = pdf.w / \
             (inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_COL] * 1.2)
+
+        #Setting the PDF margin to adapt to the changes of the size of BINGO cards
         pdf.set_left_margin(
             (pdf.w - inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_COL] * columnWidth) / 2)
         pdf.set_top_margin(
             (pdf.h - (inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_ROW] * lineHeight + 10)) / 2)
         start = 1
+
+        #Setting the BINGO cards header font,size & color in PDF to be dynamic and change to the size of BINGO cards
         for index in cardsArray:
             pdf.add_page()
             pdf.set_font("Courier", "BI", size=25)
@@ -46,6 +52,8 @@ class PdfGenerationClass:
             pdf.set_font("Times", "B", size=15)
             pdf.set_text_color(r=0, g=0, b=0)
             start += 1
+
+            #Input the number arrays in cells to output to PDF and replace the FREE cells with image input from user
             for row in index:
                 textArray = np.array2string(
                     row, precision=1, separator=',', suppress_small=True)
