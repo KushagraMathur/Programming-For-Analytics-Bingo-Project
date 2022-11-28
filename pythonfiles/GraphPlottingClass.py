@@ -22,9 +22,12 @@ class GraphPlottingClass:
 
     '''
     @description
-    Method for plotting the line graph for total numbers called vs the number of winners.
+    Method for plotting:
+    1. line graph for total numbers called vs the number of winners.
+    2. histogram for number of winners in each simulation after x number being called.
     @parameter
     numOfWinnersDict - Dictionary containing the total numbers called to the list of winners at each turn for each simulation.
+    inputToValueDict - Dictionary with user input values.
     '''
 
     def plotLineGraph(self, numOfWinnersDict, inputToValueDict):
@@ -87,6 +90,5 @@ class GraphPlottingClass:
         plt.xlabel('Numbers of Winners')
         plt.title(
             "Number of winners in each simulation after calling " + str(inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS]) + " numbers")
-        fig.tight_layout()
         plt.savefig('Histogram.jpeg')
         plt.show()
