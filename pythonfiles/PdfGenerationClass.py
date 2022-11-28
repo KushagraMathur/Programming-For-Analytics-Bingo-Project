@@ -52,13 +52,14 @@ class PdfGenerationClass:
                 textArray = textArray[1:-1]
                 for numberString in textArray.split(','):
                     pdf.set_fill_color(r=122, g=169, b=240)
-                    if numberString == "-1." or numberString == " -1.":
+                    numberString = numberString.strip()
+                    if numberString == "-1.":
                         xPos = pdf.get_x()
                         yPos = pdf.get_y()
-                    pdf.multi_cell(columnWidth, lineHeight,
-                                   numberString[:-1], border=1, align='C',
-                                   ln=3, max_line_height=pdf.font_size, fill=True)
-                    if numberString == "-1." or numberString == " -1.":
+                    pdf.cell(columnWidth, lineHeight,
+                             numberString[:-1], border=1, align='C',
+                             ln=0, fill=True)
+                    if numberString == "-1.":
                         pdf.image(inputToValueDict[self.bingoConstantsClassInstance.IMAGE_REQUESTED], x=xPos, y=yPos,
                                   w=columnWidth, h=lineHeight)
                 pdf.ln(lineHeight)
