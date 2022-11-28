@@ -30,6 +30,7 @@ class SimulationsClass:
     '''
 
     def checkBingo(self, countCardsSet, bingoCardsSet, testArray, sizeOfCardRow, sizeOfCardCol):
+        # To check for the bingo possibility for square matrix; row-wise, column-wise and and by both diagonals.
         if sizeOfCardRow == sizeOfCardCol:
             for index in countCardsSet:
                 if np.diagonal(self.testArray[index]).sum() == sizeOfCardRow:
@@ -40,6 +41,8 @@ class SimulationsClass:
                     bingoCardsSet.add(index)
                 elif sizeOfCardRow in np.sum(testArray[index], axis=1):
                     bingoCardsSet.add(index)
+        
+        # To check for the bingo possibility for asymmetric matrix; only row-wise and column-wise.
         else:
             for index in countCardsSet:
                 if sizeOfCardRow in np.sum(testArray[index], axis=0):
@@ -62,9 +65,11 @@ class SimulationsClass:
         numOfWinnersDict = defaultdict(list)
         loopVariable = 1
         while loopVariable <= inputToValueDict[self.bingoConstantsClassInstance.SIMULATIONS]:
+            # To generate user specified bingo card numbers from lower range to upper range and storing it after shuffling in random order. 
             self.bingoNumbers = np.arange(
                 inputToValueDict[self.bingoConstantsClassInstance.LOWER_RANGE_OF_CARD_NUMBERS], inputToValueDict[self.bingoConstantsClassInstance.UPPER_RANGE_OF_CARD_NUMBERS] + 1)
             np.random.shuffle(self.bingoNumbers)
+            # testArray(equal to number of cardsArray) is the array with zeros in all cells except -1 for free cells,  
             self.testArray = np.zeros(
                 (inputToValueDict[self.bingoConstantsClassInstance.CARDS], inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_ROW], inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_COL]))
             for value in indicesOfFreeCellDict.values():
@@ -74,8 +79,10 @@ class SimulationsClass:
             numbersCalled = 1
             for number in self.bingoNumbers:
                 countCardsSet = set()
+                # To replace the zero in testArray by 1 at the same indice where the bingo number is found in cardsArray. 
                 self.testArray[cardsArray == number] = 1
                 countCardsSet.update(list((np.where(cardsArray == number))[0]))
+                # To check how many cards have reached BINGO after each bingo number being called. 
                 if (len(countCardsSet) > 0):
                     self.checkBingo(
                         countCardsSet, self.bingoCardSet, self.testArray, inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_ROW], inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_COL])
