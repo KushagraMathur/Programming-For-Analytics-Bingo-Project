@@ -53,106 +53,112 @@ class TKinterGUIClass:
         self.indicesOfFreeCellDict = defaultdict(list)
 
         # Creating the bingo input form
-        self.welcomeText = tk.Label(
-            master, text='Hello!!, Welcome to the BINGO simulator')
-        self.welcomeText.grid(row=0, column=4)
-        self.detailsText = tk.Label(
-            master, text='Please enter the below details to simulate a game of BINGO')
-        self.detailsText.grid(row=1, column=4)
+        self.welcomeText1 = tk.Label(
+            master, text='Hello!! Welcome to', background='skyblue', font='Helvetica 16 bold', wraplength=500, justify='left')
+        self.welcomeText1.grid(row=0, column=0, sticky='e')
+        self.welcomeText2 = tk.Label(
+            master, text='the BINGO simulator', background='skyblue', font='Helvetica 16 bold', wraplength=500, justify='left')
+        self.welcomeText2.grid(row=0, column=1, sticky='w')
+        self.detailsText1 = tk.Label(
+            master, text='Please enter the below details to', background='skyblue', font='Helvetica 16 bold', wraplength=500, justify='left')
+        self.detailsText1.grid(row=1, column=0, sticky='e')
+        self.detailsText2 = tk.Label(
+            master, text='simulate a game of BINGO', background='skyblue', font='Helvetica 16 bold', wraplength=500, justify='left')
+        self.detailsText2.grid(row=1, column=1, sticky='w')
 
         numOfCardsLabel = tk.Label(
-            master, text='Number of Cards: ')
+            master, text='Number of Cards: ', background='skyblue', font='Helvetica 9 bold')
         self.numOfCardsEntry = tk.Entry(master, textvariable=numOfCardsLabel)
-        numOfCardsLabel.grid(row=2, column=0)
-        self.numOfCardsEntry.grid(row=2, column=1)
+        numOfCardsLabel.grid(row=2, column=0, sticky='e')
+        self.numOfCardsEntry.grid(row=2, column=1, sticky='e')
 
         numOfSimulationLabel = tk.Label(
-            master, text='Number of Simulations: ')
+            master, text='Number of Simulations: ', background='skyblue', font='Helvetica 9 bold')
         self.numOfSimulationsEntry = tk.Entry(
             master, textvariable=numOfSimulationLabel)
-        numOfSimulationLabel.grid(row=3, column=0)
-        self.numOfSimulationsEntry.grid(row=3, column=1)
+        numOfSimulationLabel.grid(row=3, column=0, sticky='e')
+        self.numOfSimulationsEntry.grid(row=3, column=1, sticky='e')
 
         numOfCardRowsLabel = tk.Label(
-            master, text='Number of rows in the card: ')
+            master, text='Number of rows in the card: ', background='skyblue', font='Helvetica 9 bold')
         self.numOfCardRowsEntry = tk.Entry(
             master, textvariable=numOfCardRowsLabel)
-        numOfCardRowsLabel.grid(row=4, column=0)
-        self.numOfCardRowsEntry.grid(row=4, column=1)
+        numOfCardRowsLabel.grid(row=4, column=0, sticky='e')
+        self.numOfCardRowsEntry.grid(row=4, column=1, sticky='e')
 
         numOfCardColumnsLabel = tk.Label(
-            master, text='Number of columns in the card: ')
+            master, text='Number of columns in the card: ', background='skyblue', font='Helvetica 9 bold')
         self.numOfCardColumnsEntry = tk.Entry(
             master, textvariable=numOfCardColumnsLabel)
-        numOfCardColumnsLabel.grid(row=5, column=0)
-        self.numOfCardColumnsEntry.grid(row=5, column=1)
+        numOfCardColumnsLabel.grid(row=5, column=0, sticky='e')
+        self.numOfCardColumnsEntry.grid(row=5, column=1, sticky='e')
 
         lowerRangeNumberLabel = tk.Label(
-            master, text='Enter the lower range of numbers: ')
+            master, text='Enter the lower range of numbers: ', background='skyblue', font='Helvetica 9 bold')
         self.lowerRangeNumberEntry = tk.Entry(
             master, textvariable=lowerRangeNumberLabel)
-        lowerRangeNumberLabel.grid(row=6, column=0)
-        self.lowerRangeNumberEntry.grid(row=6, column=1)
+        lowerRangeNumberLabel.grid(row=6, column=0, sticky='e')
+        self.lowerRangeNumberEntry.grid(row=6, column=1, sticky='e')
 
         upperRangeNumberLabel = tk.Label(
-            master, text='Enter the upper range of numbers: ')
+            master, text='Enter the upper range of numbers: ', background='skyblue', font='Helvetica 9 bold')
         self.upperRangeNumberEntry = tk.Entry(
             master, textvariable=upperRangeNumberLabel)
-        upperRangeNumberLabel.grid(row=7, column=0)
-        self.upperRangeNumberEntry.grid(row=7, column=1)
+        upperRangeNumberLabel.grid(row=7, column=0, sticky='e')
+        self.upperRangeNumberEntry.grid(row=7, column=1, sticky='e')
 
         numberOfNumbersLabel = tk.Label(
-            master, text='Enter the number of numbers for histogram: ')
+            master, text='Enter the number of numbers for histogram: ', background='skyblue', font='Helvetica 9 bold')
         self.numberOfNumbersEntry = tk.Entry(
             master, textvariable=numberOfNumbersLabel)
-        numberOfNumbersLabel.grid(row=8, column=0)
-        self.numberOfNumbersEntry.grid(row=8, column=1)
+        numberOfNumbersLabel.grid(row=8, column=0, sticky='e')
+        self.numberOfNumbersEntry.grid(row=8, column=1, sticky='e')
 
         numOfFreeCellsLabel = tk.Label(
-            master, text='Number of free cells: ')
+            master, text='Number of free cells: ', background='skyblue', font='Helvetica 9 bold')
         self.numOfFreeCellsEntry = tk.Entry(
             master, textvariable=numOfFreeCellsLabel)
-        numOfFreeCellsLabel.grid(row=9, column=0)
-        self.numOfFreeCellsEntry.grid(row=9, column=1)
+        numOfFreeCellsLabel.grid(row=9, column=0, sticky='e')
+        self.numOfFreeCellsEntry.grid(row=9, column=1, sticky='e')
 
         imageUrlLabel = tk.Label(
-            master, text='Enter the image URL: ')
+            master, text='Enter the image URL: ', background='skyblue', font='Helvetica 9 bold')
         self.imageUrlEntry = tk.Entry(
             master, textvariable=imageUrlLabel)
-        imageUrlLabel.grid(row=10, column=0)
-        self.imageUrlEntry.grid(row=10, column=1)
+        imageUrlLabel.grid(row=10, column=0, sticky='e')
+        self.imageUrlEntry.grid(row=10, column=1, sticky='e')
 
         posOfFreeCellsText = tk.Label(
-            master, text='Please enter the rows and columns indexes of the free cells. For multiple free cells, separate indexes by commas. Ex Rows: 1,3,5 Columns: 2,4,3 ')
-        posOfFreeCellsText.grid(row=11, column=4)
+            master, text='Please enter the rows and columns indexes of the free cells. For multiple free cells, separate indexes by commas. Ex Rows: 1,3,5 Columns: 2,4,3 ', background='skyblue', font='Helvetica 9 bold', wraplength=400, justify='left')
+        posOfFreeCellsText.grid(row=11, column=0, sticky='w')
 
         rowLabel = tk.Label(
-            master, text='Rows: ')
+            master, text='Free Cell Rows: ', background='skyblue', font='Helvetica 9 bold')
         self.freeCellRowsEntry = tk.Entry(master, textvariable=rowLabel)
-        rowLabel.grid(row=12, column=0)
+        rowLabel.grid(row=12, column=0, sticky='e')
         self.freeCellRowsEntry.grid(row=12, column=1)
 
         columnLabel = tk.Label(
-            master, text='Columns: ')
+            master, text='Free Cell Columns: ', background='skyblue', font='Helvetica 9 bold')
         self.freeCellColumnsEntry = tk.Entry(master, textvariable=columnLabel)
         columnLabel.grid(row=12, column=2)
         self.freeCellColumnsEntry.grid(row=12, column=3)
 
         buttonInfoText = tk.Label(
-            master, text='The Generate Cards Button will generate the Bingo cards. Run simulations will run Bingo game simualtions.')
-        buttonInfoText.grid(row=13, column=4)
+            master, text='The Generate Cards Button will generate the Bingo cards. Run simulations will run Bingo game simualtions.', background='skyblue', font='Helvetica 9 bold', wraplength=400, justify='left')
+        buttonInfoText.grid(row=13, column=0, sticky='w')
 
         generateCardsButton = tk.Button(
             master, text='Generate Cards', command=self.validateDataAndGenerateCards)
-        generateCardsButton.grid(row=20, column=2)
+        generateCardsButton.grid(row=20, column=1)
 
         runSimulationsButton = tk.Button(
             master, text='Run Simulations', command=self.runSimualtionsForCards)
-        runSimulationsButton.grid(row=20, column=5)
+        runSimulationsButton.grid(row=20, column=3)
 
         self.quitButton = tk.Button(
             master, text='Quit Program', command=self.quit)
-        self.quitButton.grid(row=30, column=4)
+        self.quitButton.grid(row=30, column=2)
         self.callingClassInstance = CallingClass.CallingClass(
             self.inputToValueDict, self.indicesOfFreeCellDict)
 
@@ -163,6 +169,7 @@ class TKinterGUIClass:
     '''
 
     def validateDataAndGenerateCards(self):
+        # Performing validation checks on user data. If a failure is found, user must enter details again.
         self.inputToValueDict = OrderedDict({self.bingoConstantsClassInstance.CARDS: self.numOfCardsEntry.get(),
                                              self.bingoConstantsClassInstance.SIMULATIONS: self.numOfSimulationsEntry.get(),
                                              self.bingoConstantsClassInstance.SIZE_OF_CARD_ROW: self.numOfCardRowsEntry.get(),
@@ -233,7 +240,7 @@ class TKinterGUIClass:
                     return
                 except ValueTooLargeException:
                     messagebox.showerror(
-                        message='Value of row or column is too large. Value should be <= size of the row or column')
+                        message='Value of free cell row or column is too large. Value should be <= size of the row or column')
                     return
         else:
             if len(self.freeCellRowsEntry.get()) or len(self.freeCellColumnsEntry.get()) or len(self.inputToValueDict[self.bingoConstantsClassInstance.IMAGE_REQUESTED]):
@@ -283,6 +290,7 @@ class TKinterGUIClass:
     '''
 
     def runSimualtionsForCards(self):
+        # Run the simulations and the graph plotting functionality
         try:
             if len(self.cardsArray) > 0:
                 self.numOfWinnersDict = self.callingClassInstance.runSimulations(
@@ -311,6 +319,7 @@ class TKinterGUIClass:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.geometry("1700x500")
+    root.geometry("1000x500")
+    root.configure(background='skyblue')
     TKinterGUIClass(root)
     root.mainloop()

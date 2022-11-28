@@ -67,7 +67,7 @@ class GraphPlottingClass:
         data['Skew'] = data['Skew'].replace(np.nan, "nan")
         data['Kurtosis'] = data['Kurtosis'].replace(np.nan, "nan")
         data.to_excel('Centrality_Data.xlsx')
-        
+
         plt.subplot(1, 2, 1)
         plt.fill_between(listOfTurns, listOfPosStdDevValues,
                          listOfNegStdDevValues, color='skyblue', alpha=0.5)
@@ -79,16 +79,16 @@ class GraphPlottingClass:
         plt.ylabel('Winners')
         plt.xlabel('Total Numbers Called')
         plt.title('Number of winners per number called')
-        plt.savefig('Graph.jpeg')
-        
 
         # Creating histogram
         plt.subplot(1, 2, 2)
         plt.hist(numOfWinnersDict[inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS]],
-                inputToValueDict[self.bingoConstantsClassInstance.CARDS])
+                 inputToValueDict[self.bingoConstantsClassInstance.CARDS])
         plt.ylabel('Frequency of Winners')
         plt.xlabel('Numbers of Winners')
         plt.title(
             "Number of winners in each simulation after calling " + str(inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS]) + " numbers")
-        plt.savefig('Histogram.jpeg')
+        plt.tight_layout()
+        plt.gcf().set_size_inches(18.5, 10.5)
+        plt.savefig('Graphs.jpeg')
         plt.show()
