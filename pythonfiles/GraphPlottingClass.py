@@ -44,6 +44,11 @@ class GraphPlottingClass:
         secondQuartileValueDict = {}
         thirdQuartileValueDict = {}
         standardDeviationValueDict = {}
+        
+        '''
+        Below "for" loop extracts the number of winners after each number called for all the simulations.Using the number of winners
+        we compute average, maximum, minimum, standard deviation, median, kurtosis, skew and percentiles.
+        '''
         for key, value in numOfWinnersDict.items():
             numOfWinnersDict[key] = np.array(value)
             listOfAverageValues.append(np.average(numOfWinnersDict[key]))
@@ -61,13 +66,23 @@ class GraphPlottingClass:
             firstQuartileValueDict[key] = np.percentile(value, 25)
             secondQuartileValueDict[key] = np.percentile(value, 50)
             thirdQuartileValueDict[key] = np.percentile(value, 75)
+        # creating a dictionary which contains values like median, standard deviation, skew, kurtosis and percentiles.
         CentralityDataDict = {"Median": medianValueDict, "Standard Deviation": standardDeviationValueDict, "Skew": skewValueDict,
                               "Kurtosis": kurtosisValueDict, "25th Percentile": firstQuartileValueDict, "50th Percentile": secondQuartileValueDict, "75th Percentile": thirdQuartileValueDict}
+       
+        # Convert the dictionary into panda data frame in order to export the centrality data.
         data = pd.DataFrame(CentralityDataDict)
+        
+        # For some of the values we get Skew and Kurtosis as nan (Not a Number). below code will replace the empty cells in excel as "nan".
         data['Skew'] = data['Skew'].replace(np.nan, "nan")
         data['Kurtosis'] = data['Kurtosis'].replace(np.nan, "nan")
+        
+        # export the centrality data to an excel file.
         data.to_excel('Centrality_Data.xlsx')
+        
+        # Below code creates two subplots, one for the line graph and other for the histogram.
 
+        # Creating line graph.
         plt.subplot(1, 2, 1)
         plt.fill_between(listOfTurns, listOfPosStdDevValues,
                          listOfNegStdDevValues, color='skyblue', alpha=0.5)
@@ -80,7 +95,7 @@ class GraphPlottingClass:
         plt.xlabel('Total Numbers Called')
         plt.title('Number of winners per number called')
 
-        # Creating histogram
+        # Creating histogram.
         plt.subplot(1, 2, 2)
         plt.hist(numOfWinnersDict[inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS]],
                  inputToValueDict[self.bingoConstantsClassInstance.CARDS])
@@ -89,6 +104,8 @@ class GraphPlottingClass:
         plt.title(
             "Number of winners in each simulation after calling " + str(inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS]) + " numbers")
         plt.tight_layout()
+        
+        # Convert both the grapsh obtained into a jpeg image.
         plt.gcf().set_size_inches(18.5, 10.5)
         plt.savefig('Graphs.jpeg')
         plt.show()
