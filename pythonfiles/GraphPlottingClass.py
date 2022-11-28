@@ -3,6 +3,7 @@ import numpy as np
 import statistics
 import scipy.stats
 import pandas as pd
+import BingoConstantsClass
 
 '''
 @description
@@ -13,12 +14,23 @@ GraphPlottingClass - Class which contains the results display logic like plot cr
 class GraphPlottingClass:
     '''
     @description
-    Method for plotting the line graph for total numbers called vs the number of winners.
-    @parameter
-    numOfWinnersDict - Dictionary containing the total numbers called to the list of winners at each turn for each simulation.
+    Initial constructor method.
     '''
 
-    def plotLineGraph(self, numOfWinnersDict):
+    def __init__(self):
+        self.bingoConstantsClassInstance = BingoConstantsClass.BingoConstantsClass()
+
+    '''
+    @description
+    Method for plotting:
+    1. line graph for total numbers called vs the number of winners.
+    2. histogram for number of winners in each simulation after x number being called.
+    @parameter
+    numOfWinnersDict - Dictionary containing the total numbers called to the list of winners at each turn for each simulation.
+    inputToValueDict - Dictionary with user input values.
+    '''
+
+    def plotLineGraph(self, numOfWinnersDict, inputToValueDict):
         listOfAverageValues = []
         listOfMaxValues = []
         listOfMinValues = []
@@ -55,14 +67,28 @@ class GraphPlottingClass:
         data['Skew'] = data['Skew'].replace(np.nan, "nan")
         data['Kurtosis'] = data['Kurtosis'].replace(np.nan, "nan")
         data.to_excel('Centrality_Data.xlsx')
-
-        plt.plot(listOfTurns, listOfAverageValues)
-        plt.plot(listOfTurns, listOfPosStdDevValues)
-        plt.plot(listOfTurns, listOfNegStdDevValues)
+        
+        plt.subplot(1, 2, 1)
         plt.fill_between(listOfTurns, listOfPosStdDevValues,
-                         listOfNegStdDevValues, color='cyan', alpha=0.5)
-        plt.plot(listOfTurns, listOfMaxValues, linestyle='dashed')
-        plt.plot(listOfTurns, listOfMinValues, linestyle='dashed')
+                         listOfNegStdDevValues, color='skyblue', alpha=0.5)
+        plt.plot(listOfTurns, listOfMaxValues, color='skyblue',
+                 alpha=0.5, linestyle='dashed')
+        plt.plot(listOfTurns, listOfMinValues, color='skyblue',
+                 alpha=0.5, linestyle='dashed')
+        plt.plot(listOfTurns, listOfAverageValues, color='blue')
         plt.ylabel('Winners')
         plt.xlabel('Total Numbers Called')
+        plt.title('Number of winners per number called')
+        plt.savefig('Graph.jpeg')
+        
+
+        # Creating histogram
+        plt.subplot(1, 2, 2)
+        plt.hist(numOfWinnersDict[inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS]],
+                inputToValueDict[self.bingoConstantsClassInstance.CARDS])
+        plt.ylabel('Frequency of Winners')
+        plt.xlabel('Numbers of Winners')
+        plt.title(
+            "Number of winners in each simulation after calling " + str(inputToValueDict[self.bingoConstantsClassInstance.NUMBER_OF_NUMBERS]) + " numbers")
+        plt.savefig('Histogram.jpeg')
         plt.show()

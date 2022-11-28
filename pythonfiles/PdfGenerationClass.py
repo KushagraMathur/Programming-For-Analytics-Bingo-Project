@@ -39,7 +39,7 @@ class PdfGenerationClass:
         for index in cardsArray:
             pdf.add_page()
             pdf.set_font("Courier", "BI", size=25)
-            pdf.set_fill_color(r=138, g=43, b=226)
+            pdf.set_fill_color(r=59, g=113, b=245)
             pdf.set_text_color(r=252, g=252, b=252)
             pdf.cell((inputToValueDict[self.bingoConstantsClassInstance.SIZE_OF_CARD_COL] * columnWidth), 10,
                      'Bingo Card '+str(start), 0, 1, 'C', fill=1)
@@ -51,7 +51,7 @@ class PdfGenerationClass:
                     row, precision=1, separator=',', suppress_small=True)
                 textArray = textArray[1:-1]
                 for numberString in textArray.split(','):
-                    pdf.set_fill_color(r=252, g=100, b=150)
+                    pdf.set_fill_color(r=122, g=169, b=240)
                     if numberString == "-1." or numberString == " -1.":
                         xPos = pdf.get_x()
                         yPos = pdf.get_y()
